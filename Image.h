@@ -1,10 +1,7 @@
-/*********************************************************************/ 
-/* Image.h: header file for basic image manipulations                */ 
-/*                                                                   */
-/* 11/07/11 Weiwei Chen: modified for EECS22 assignment5 Fall2011    */
-/* 10/20/11 Weiwei Chen: initial solution version                    */
-/*                       for EECS22 assignment4 FAll2011             */
-/*********************************************************************/ 
+/**************************************************************************************************/
+/* Image.h: header file for basic image manipulations                                             */
+/* author: Deukkwon Yoon                                                      */
+/**************************************************************************************************/
 #ifndef IMAGE_H
 #define IMAGE_H
 
@@ -12,9 +9,9 @@
 #include <stdio.h>
 #include <assert.h>
 
-/******************************************************************************/
-/* IMAGE                                                                      */
-/******************************************************************************/
+/**************************************************************************************************/
+/* IMAGE                                                                                          */
+/**************************************************************************************************/
 
 typedef struct {
     unsigned int Width;  /* image width */
@@ -45,9 +42,9 @@ IMAGE *CreateImage(unsigned int Width, unsigned int Height);
 /*release the memory spaces for the image                        */
 void DeleteImage(IMAGE *image);
 
-/******************************************************************************/
-/* RGB                                                                        */
-/******************************************************************************/
+/**************************************************************************************************/
+/* RGB                                                                                            */
+/**************************************************************************************************/
 
 /*Get the color intensity of the R channel of pixel (x, y) in image */
 unsigned char GetPixelR(IMAGE *image, unsigned int x,  unsigned int y);
@@ -67,9 +64,9 @@ void SetPixelG(IMAGE *image, unsigned int x,  unsigned int y, unsigned char g);
 /*Set the color intensity of the B channel of pixel (x, y) in image */
 void SetPixelB(IMAGE *image, unsigned int x,  unsigned int y, unsigned char b);
 
-/******************************************************************************/
-/* YUV                                                                        */
-/******************************************************************************/
+/**************************************************************************************************/
+/* YUV                                                                                            */
+/**************************************************************************************************/
 
 /*Get the color intensity of the Y channel of pixel (x, y) in image */
 unsigned char GetPixelY(IMAGE *image, unsigned int x,  unsigned int y);
@@ -81,15 +78,12 @@ unsigned char GetPixelU(IMAGE *image, unsigned int x,  unsigned int y);
 unsigned char GetPixelV(IMAGE *image, unsigned int x,  unsigned int y);
 
 /*Set the color intensity of the Y channel of pixel (x, y) in image */
-void SetPixelY(IMAGE *image,
-               unsigned int x,  unsigned int y, unsigned char yuv_y);
+void SetPixelY(IMAGE *image, unsigned int x,  unsigned int y, unsigned char yuv_y);
 
 /*Set the color intensity of the U channel of pixel (x, y) in image */
-void SetPixelU(IMAGE *image,
-               unsigned int x,  unsigned int y, unsigned char yuv_u);
+void SetPixelU(IMAGE *image, unsigned int x,  unsigned int y, unsigned char yuv_u);
 
 /*Set the color intensity of the V channel of pixel (x, y) in image */
-void SetPixelV(IMAGE *image,
-               unsigned int x,  unsigned int y, unsigned char yuv_v);
+void SetPixelV(IMAGE *image, unsigned int x,  unsigned int y, unsigned char yuv_v);
 
 #endif

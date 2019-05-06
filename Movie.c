@@ -1,11 +1,7 @@
-/******************************************************************************/ 
-/* Image.h: source code for basic image manipulations                         */
-/*                                                                            */ 
-/* 11/20/13 Che-Wei Chang: Union                                              */
-/* 11/07/11 Weiwei Chen: modified for EECS22 assignment5 Fall2011             */
-/* 10/20/11 Weiwei Chen: initial solution version                             */
-/*                       for EECS22 assignment4 FAll2011                      */
-/******************************************************************************/ 
+/**************************************************************************************************/
+/* Image.h: source code for basic image manipulations                                             */
+/* author: Deukkwon Yoon                                                                          */
+/**************************************************************************************************/
 
 #include "Movie.h"
 
