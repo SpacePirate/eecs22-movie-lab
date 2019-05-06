@@ -1,0 +1,139 @@
+Script started on Fri 12 Dec 2014 07:09:30 PM PST
+crystalcove% make
+gcc -Wall -ansi -c DIPs.c -o DIPs.o
+gcc -Wall -ansi -c Image.c -o Image.o
+gcc -Wall -ansi -c ImageList.c -o ImageList.o
+gcc -Wall -ansi -c Movie.c -o Movie.o
+ar rc libMovie.a DIPs.o Image.o ImageList.o Movie.o
+ranlib libMovie.a    
+gcc -Wall -ansi -lm MovieLab.c -lMovie -L. -o MovieLab
+crystalcove% MovieLab -h
+
+Format on command line is:
+MovieLab [option]
+-i [file_name]    to provide the input file name
+-o [file_name]    to provide the    output file name
+-f [no_frames]    to determine how many frames desired in the input stream
+-s [WidthxHeight] to set resolution of the input stream (widthxheight)
+-j                to generate the movie with JuliaSet sequences
+-bw               to activate the conversion to black and white
+-vflip            to activate vertical flip
+-hmirror          to activate horizontal flip
+-edge             to activate edge filter
+-poster           to activate posterize filter
+-cut [Start-End]  to crop the frame from the video from frame Start to frame End
+-resize [factor]  to resize the video with the provided factor [1-100]
+-fast   [factor]  to fast forward the video with the provided factor [1+]
+-rvs              to reverse the frame order of the input stream
+-h                to show this usage information
+crystalcove% MovieLab -i anteater -o out f-100 -s 352x288 -bw -vflip
+Operation BlackNWhite is done!
+Operation VFlip is done!
+start SaveMovie, total frame 100
+Deleting Movie
+The movie file out.yuv has been written successfully! 
+100 frames are written to the file out.yuv in total 
+crystalcove% MovieLab -i anteater -o out -f 100 -s 352x288 -edge
+Operation Edge is done!
+start SaveMovie, total frame 100
+Deleting Movie
+The movie file out.yuv has been written successfully! 
+100 frames are written to the file out.yuv in total 
+crystalcove% MovieLab -i anteater -o out -f 100 -s 352x288 -edge[K[K[K[Kposter
+Operation Posterize is done!
+start SaveMovie, total frame 100
+Deleting Movie
+The movie file out.yuv has been written successfully! 
+100 frames are written to the file out.yuv in total 
+crystalcove% valgrind --leak-check=full MovieLab -i anteater -o out1 -f 150 -s 352x288 -cut 1-70
+==25976== Memcheck, a memory error detector
+==25976== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==25976== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==25976== Command: MovieLab -i anteater -o out1 -f 150 -s 352x288 -cut 1-70
+==25976== 
+Operation Frame Cropping is done!
+start SaveMovie, total frame 69
+Deleting Movie
+The movie file out1.yuv has been written successfully! 
+69 frames are written to the file out1.yuv in total 
+==25976== 
+==25976== HEAP SUMMARY:
+==25976==     in use at exit: 0 bytes in 0 blocks
+==25976==   total heap usage: 1,781 allocs, 1,781 frees, 112,325,678 bytes allocated
+==25976== 
+==25976== All heap blocks were freed -- no leaks are possible
+==25976== 
+==25976== For counts of detected and suppressed errors, rerun with: -v
+==25976== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+crystalcove% valgrind --leak-check=full MovieLab -i anteater -o out1 -f 150 -s 352x288 -cut 80-150
+
+==26687== Memcheck, a memory error detector
+==26687== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==26687== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==26687== Command: MovieLab -i anteater -o out2 -f 150 -s 352x288 -cut 80-150
+==26687== 
+Operation Frame Cropping is done!
+start SaveMovie, total frame 70
+Deleting Movie
+The movie file out2.yuv has been written successfully! 
+70 frames are written to the file out2.yuv in total 
+==26687== 
+==26687== HEAP SUMMARY:
+==26687==     in use at exit: 0 bytes in 0 blocks
+==26687==   total heap usage: 1,785 allocs, 1,785 frees, 112,629,838 bytes allocated
+==26687== 
+==26687== All heap blocks were freed -- no leaks are possible
+==26687== 
+==26687== For counts of detected and suppressed errors, rerun with: -v
+==26687== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+crystalcove% valgrind --leak-check=full MovieLab -i anteater -o out2 -f 150 -s 352x288 -fast 3[K[26D
+==27292== Memcheck, a memory error detector
+==27292== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==27292== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==27292== Command: MovieLab -i anteater -o out -f 150 -s 352x288 -fast 3
+==27292== 
+Operation Fast Forward is done! Number of frames = 50
+start SaveMovie, total frame 50
+Deleting Movie
+The movie file out.yuv has been written successfully! 
+50 frames are written to the file out.yuv in total 
+==27292== 
+==27292== HEAP SUMMARY:
+==27292==     in use at exit: 0 bytes in 0 blocks
+==27292==   total heap usage: 1,705 allocs, 1,705 frees, 106,546,637 bytes allocated
+==27292== 
+==27292== All heap blocks were freed -- no leaks are possible
+==27292== 
+==27292== For counts of detected and suppressed errors, rerun with: -v
+==27292== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+crystalcove% valgrind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75
+==27657== Memcheck, a memory error detector
+==27657== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==27657== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==27657== Command: MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75
+==27657== 
+Operation Resize is done! New Size is: 264x216
+start SaveMovie, total frame 150
+Deleting Movie
+The movie file out.yuv has been written successfully! 
+150 frames are written to the file out.yuv in total 
+==27657== 
+==27657== HEAP SUMMARY:
+==27657==     in use at exit: 0 bytes in 0 blocks
+==27657==   total heap usage: 2,705 allocs, 2,705 frees, 142,669,837 bytes allocated
+==27657== 
+==27657== All heap blocks were freed -- no leaks are possible
+==27657== 
+==27657== For counts of detected and suppressed errors, rerun with: -v
+==27657== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+crystalcove% valgrind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[83Dvalgrind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[82Dlgrind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[81Dgrind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[80Drind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[79Dind --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[78Dnd --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[77Dd --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[76D --leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[75D--leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[74D-leak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[73Dleak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[72Deak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[71Dak-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[70Dk-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[69D-check=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[68Dcheck=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[67Dheck=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[66Deck=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[65Dck=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[64Dk=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[63D=full MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[62Dfull MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[61Dull MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[60Dll MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[59Dl MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[58D MovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[57DMovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[56DovieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[55DvieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[54DieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[53DMieLab -i anteater -o out -f 150 -s 352x288 -resize 75[53DoieLab -i anteater -o out -f 150 -s 352x288 -resize 75[53DvieLab -i anteater -o out -f 150 -s 352x288 -resize 75[53DieLab -i anteater -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D-o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[36D-o out -f 150 -s 352x288 -resize 75[K[36D -o out -f 150 -s 352x288 -resize 75[K[29D -f 150 -s 352x288 -resize 75[K[29D -f 150 -s 352x288 -resize 75[K[29Dm -f 150 -s 352x288 -resize 75[29Da -f 150 -s 352x288 -resize 75[29Dn -f 150 -s 352x288 -resize 75[29Dd -f 150 -s 352x288 -resize 75[29De -f 150 -s 352x288 -resize 75[29Dl -f 150 -s 352x288 -resize 75[29Db -f 150 -s 352x288 -resize 75[29Dr -f 150 -s 352x288 -resize 75[29Do -f 150 -s 352x288 -resize 75[29Dt -f 150 -s 352x288 -resize 75[29D -f 150 -s 352x288 -resize 75[K[22D -s 352x288 -resize 75[K[22D -s 352x288 -resize 75[K[22D4 -s 352x288 -resize 75[22D0 -s 352x288 -resize 75[22D -s 352x288 -resize 75[K[K[K[K[K[K[K[Km
+Segmentation fault (core dumped)
+crystalcove% make clean
+rm -f *.o
+rm -f MovieLab
+rm -f lib*.a
+rm -f *.yuv
+crystalcove% exit
+exit
+
+Script done on Fri 12 Dec 2014 07:33:30 PM PST
